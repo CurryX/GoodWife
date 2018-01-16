@@ -29,5 +29,6 @@ class OrderItem(models.Model):
     tags = models.TextField()
     washed = models.BooleanField()
     picked = models.BooleanField()
-    price = models.FloatField()
+    unit_price = models.FloatField()
+    quantity = models.FloatField()
     comment = models.TextField()
