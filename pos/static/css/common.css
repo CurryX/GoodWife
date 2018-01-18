@@ -1,8 +1,9 @@
 body {
-    padding-top: 60px;
+    padding-top: 70px;
 }
 .box {
     margin: 15px auto;
+    margin-top: 0;
     padding: 10px 15px 10px;
     border: 1px solid #000;
     border-radius: 3px;
@@ -24,4 +25,7 @@ body {
 }
 .input-group-addon-tiny {
     padding: 0 2px !important;
+}
+.bootstrap-tagsinput {
+    width: 100%;
 }

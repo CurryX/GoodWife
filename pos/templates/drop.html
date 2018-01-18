@@ -1,3 +1,4 @@
+{% load static %}
 {% include 'base.html' with active_drop='true' %}
 {% block body %}
     <div class="container">
@@ -31,6 +32,78 @@
                 <div>黑色；脏脏脏</div>
             </div>
         </div>
-        <div class="col-xs-8"></div>
+        <div class="col-xs-8">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label for="edit-name" class="col-xs-2 control-label">名称</label>
+                    <div class="col-xs-10">
+                        <input type="text" class="form-control" id="edit-name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit-quantity" class="col-xs-2 control-label">数量</label>
+                    <div class="col-sm-4">
+                        <input type="number" class="form-control" id="edit-quantity" value="1">
+                    </div>
+                    <label for="edit-unit-price" class="col-xs-2 control-label">单价</label>
+                    <div class="col-sm-4">
+                        <input type="number" class="form-control" id="edit-unit-price" value="35">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit-tags" class="col-xs-2 control-label">标签</label>
+                    <div class="col-xs-10">
+                        <input type="text" class="form-control" id="edit-tags" data-role="tagsinput" value="这么脏,不洗了">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit-comment" class="col-xs-2 control-label">备注</label>
+                    <div class="col-xs-10">
+                        <input type="text" class="form-control" id="edit-comment">
+                    </div>
+                </div>
+            </div>
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab-name" data-toggle="tab">衣物名称</a></li>
+                <li><a href="#tab-color" data-toggle="tab">颜色</a></li>
+                <li><a href="#tab-brand" data-toggle="tab">品牌</a></li>
+                <li><a href="#tab-handling" data-toggle="tab">洗涤说明</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab-name">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>价格</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>窗帘儿</td>
+                            <td>50</td>
+                        </tr>
+                        <tr>
+                            <td>床单儿</td>
+                            <td>30</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane" id="tab-color">
+                    <p>颜色</p>
+                </div>
+                <div class="tab-pane" id="tab-brand">
+                    <p>品牌</p>
+                </div>
+                <div class="tab-pane" id="tab-handling">
+                    <p>洗涤说明</p>
+                </div>
+            </div>
+        </div>
     </div>
+{% endblock %}
+{% block scripts %}
+    <link href="{% static 'css/bootstrap-tagsinput.css' %}" rel="stylesheet">
+    <script src="{% static 'js/bootstrap-tagsinput.min.js' %}"></script>
 {% endblock %}
