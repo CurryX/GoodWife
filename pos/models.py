@@ -20,7 +20,7 @@ class Order(models.Model):
     cash_paid = models.FloatField()
     card_paid = models.FloatField()
     discount = models.FloatField()
-    complete = models.BooleanField()
+    completed = models.BooleanField()
     comment = models.TextField()
 
 
@@ -35,12 +35,14 @@ class OrderItem(models.Model):
     comment = models.TextField()
 
 
-class Category(models.Model):
-    name = models.TextField()
-    single_choice = models.BooleanField()
-
-
 class Tag(models.Model):
-    category = models.ForeignKey(Category, related_name='tags')
     name = models.TextField()
     pinyin = models.CharField(max_length=20)
+    used_count = models.IntegerField()
+
+
+class ClothName(models.Model):
+    name = models.TextField()
+    pinyin = models.CharField(max_length=20)
+    used_count = models.IntegerField()
+    price = models.FloatField()
