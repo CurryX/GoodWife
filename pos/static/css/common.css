@@ -16,6 +16,7 @@ body {
     border-left-width: 5px;
     border-radius: 3px;
     position: relative;
+    cursor: pointer;
 }
 .card-remove {
     position: absolute;
