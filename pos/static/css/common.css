@@ -18,6 +18,9 @@ body {
     position: relative;
     cursor: pointer;
 }
+.card-item-active {
+    border-color: #1b809e;
+}
 .card-remove {
     position: absolute;
     top: 3px;

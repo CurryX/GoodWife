@@ -16,6 +16,7 @@ function showItemList() {
             '    <div class="pull-right">' + item.count + '&nbsp;&times;&nbsp;&yen;' + item.unitPrice + '</div>\n' +
             '    <div class="clearfix"></div>\n' +
             '    <div>' + item.tags + '</div>\n' +
+            '    <div class="text-muted">' + item.comment + '</div>' +
             '</div>';
         $('#items').append(html);
     });
@@ -34,14 +35,14 @@ function showItemDetail() {
 }
 
 function updateSelection() {
-    $('.card-item').removeClass('bg-info');
+    showItemList();
+    showItemDetail();
     if (selected >= 0) {
         $('#add-item').removeClass('btn-info').addClass('btn-default');
-        $('#card-item-' + selected).addClass('bg-info');
+        $('#card-item-' + selected).addClass('bg-info').addClass('card-item-active');
     } else {
         $('#add-item').removeClass('btn-default').addClass('btn-info');
     }
-    showItemDetail();
 }
 
 function addItemClicked() {
@@ -50,8 +51,34 @@ function addItemClicked() {
 }
 
 function cardItemClicked() {
-    selected = parseInt($(this).parent().data('id'));
+    selected = parseInt($(this).data('id'));
     updateSelection();
+}
+
+function cardRemoveClicked(event) {
+    event.stopPropagation();
+    items.splice(parseInt($(this).data('id')), 1);
+    selected = -1;
+    updateSelection();
+}
+
+function editOkClicked() {
+    var item;
+    if (selected >= 0) item = items[selected];
+    else {
+        item = {};
+        items.push(item);
+    }
+    item.name = $('#edit-name').val();
+    item.count = parseFloat($('#edit-count').val());
+    item.unitPrice = parseFloat($('#edit-unit-price').val());
+    item.tags = $('#edit-tags').val();
+    item.comment = $('#edit-comment').val();
+    addItemClicked();
+}
+
+function editCancelClicked() {
+    addItemClicked();
 }
 
 function documentReady() {
@@ -62,4 +89,7 @@ function documentReady() {
 $(document)
     .ready(documentReady)
     .on('click', '#add-item', addItemClicked)
-    .on('click', '.card-item', cardItemClicked);
+    .on('click', '#edit-ok', editOkClicked)
+    .on('click', '#edit-cancel', editCancelClicked)
+    .on('click', '.card-item', cardItemClicked)
+    .on('click', '.card-remove', cardRemoveClicked);
