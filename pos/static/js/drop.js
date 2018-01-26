@@ -13,7 +13,7 @@ function showItemList() {
             '<div class="card-item" id="card-item-' + index + '" data-id="' + index + '">\n' +
             '    <button type="button" class="close card-remove">&times;</button>\n' +
             '    <div class="pull-left"><strong>' + item.name + '</strong></div>\n' +
-            '    <div class="pull-right">' + item.count + '&nbsp;&times;&nbsp;&yen;' + item.unitPrice + '</div>\n' +
+            '    <div class="pull-right">' + item.count + '&nbsp;&times;&nbsp;￥' + item.unitPrice + '</div>\n' +
             '    <div class="clearfix"></div>\n' +
             '    <div>' + item.tags + '</div>\n' +
             '    <div class="text-muted">' + item.comment + '</div>' +
@@ -21,7 +21,7 @@ function showItemList() {
         $('#items').append(html);
     });
     $('#total-count').html(totalCount + '件');
-    $('#total-price').html('&yen;' + totalPrice);
+    $('#total-price').html('￥' + totalPrice);
 }
 
 function showItemDetail() {
@@ -81,9 +81,47 @@ function editCancelClicked() {
     addItemClicked();
 }
 
+function refreshNameInput(value) {
+    $('#edit-name').magicSuggest({
+        data: '/get_cloth_names',
+        method: 'GET',
+        typeDelay: 0,
+        maxSelection: 1,
+        resultAsString: true,
+        expandOnFocus: true,
+        placeholder: '',
+        infoMsgCls: 'hidden',
+        renderer: function(data){
+            return data.id + '&nbsp;<small>￥' + data.price + '</small>';
+        },
+        selectionRenderer: function(data){
+            return data.id;
+        }
+    });
+}
+
+function refreshTagsInput(value) {
+    $('#edit-tags').magicSuggest({
+        data: '/get_tags',
+        method: 'GET',
+        typeDelay: 0,
+        expandOnFocus: true,
+        placeholder: '',
+        infoMsgCls: 'hidden',
+        renderer: function(data){
+            return data.id;
+        },
+        selectionRenderer: function(data){
+            return data.id;
+        }
+    });
+}
+
 function documentReady() {
     showItemList();
     addItemClicked();
+    refreshNameInput();
+    refreshTagsInput();
 }
 
 $(document)

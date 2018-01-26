@@ -35,13 +35,13 @@
                     </div>
                     <label for="edit-unit-price" class="col-xs-2 control-label">单价</label>
                     <div class="col-sm-4">
-                        <input type="number" class="form-control" id="edit-unit-price" value="">
+                        <input type="number" class="form-control" id="edit-unit-price">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="edit-tags" class="col-xs-2 control-label">标签</label>
                     <div class="col-xs-10">
-                        <input type="text" class="form-control" id="edit-tags" value="">
+                        <input type="text" class="form-control" id="edit-tags">
                     </div>
                 </div>
                 <div class="form-group">
@@ -65,5 +65,7 @@
     </div>
 {% endblock %}
 {% block scripts %}
+    <link href="{% static 'css/magicsuggest-min.css' %}" rel="stylesheet">
+    <script src="{% static 'js/magicsuggest-min.js' %}"></script>
     <script src="{% static 'js/drop.js' %}"></script>
 {% endblock %}
