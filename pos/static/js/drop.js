@@ -1,6 +1,24 @@
 var items = [];
 var selected = -1;
 var dummyItem = {name: '', count: 1, unitPrice: 0, tags: '', comment: ''};
+var editName, editTags;
+
+function selectionToString(data) {
+    var str = '';
+    $(data).each(function () {
+        str += this.id + '；'
+    });
+    return str.length > 0 ? str.slice(0, -1) : '';
+}
+
+function stringToSelection(str) {
+    if (str === '') return [];
+    var data = [];
+    $(str.split('；')).each(function () {
+        data.push({'id': this, 'name': this});
+    });
+    return data;
+}
 
 function showItemList() {
     $('#items').empty();
@@ -27,10 +45,10 @@ function showItemList() {
 function showItemDetail() {
     var editing = selected >= 0;
     var item = editing ? items[selected] : dummyItem;
-    $('#edit-name').val(item.name);
+    editName.setSelection(stringToSelection(item.name));
     $('#edit-count').val(item.count);
     $('#edit-unit-price').val(item.unitPrice);
-    $('#edit-tags').val(item.tags);
+    editTags.setSelection(stringToSelection(item.tags));
     $('#edit-comment').val(item.comment);
 }
 
@@ -69,10 +87,10 @@ function editOkClicked() {
         item = {};
         items.push(item);
     }
-    item.name = $('#edit-name').val();
+    item.name = selectionToString(editName.getSelection());
     item.count = parseFloat($('#edit-count').val());
     item.unitPrice = parseFloat($('#edit-unit-price').val());
-    item.tags = $('#edit-tags').val();
+    item.tags = selectionToString(editTags.getSelection());
     item.comment = $('#edit-comment').val();
     addItemClicked();
 }
@@ -81,14 +99,13 @@ function editCancelClicked() {
     addItemClicked();
 }
 
-function refreshNameInput(value) {
-    $('#edit-name').magicSuggest({
+function initNameInput(value) {
+    editName = $('#edit-name').magicSuggest({
         data: '/get_cloth_names',
         method: 'GET',
         typeDelay: 0,
         maxSelection: 1,
         resultAsString: true,
-        expandOnFocus: true,
         placeholder: '',
         infoMsgCls: 'hidden',
         renderer: function(data){
@@ -98,14 +115,17 @@ function refreshNameInput(value) {
             return data.id;
         }
     });
+    $(editName).on('selectionchange', function(e, m){
+        var data = this.getSelection();
+        if (data.length > 0 && data[0].price) $('#edit-unit-price').val(data[0].price);
+    });
 }
 
-function refreshTagsInput(value) {
-    $('#edit-tags').magicSuggest({
+function initTagsInput(value) {
+    editTags = $('#edit-tags').magicSuggest({
         data: '/get_tags',
         method: 'GET',
         typeDelay: 0,
-        expandOnFocus: true,
         placeholder: '',
         infoMsgCls: 'hidden',
         renderer: function(data){
@@ -118,10 +138,10 @@ function refreshTagsInput(value) {
 }
 
 function documentReady() {
+    initNameInput();
+    initTagsInput();
     showItemList();
     addItemClicked();
-    refreshNameInput();
-    refreshTagsInput();
 }
 
 $(document)
