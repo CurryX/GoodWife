@@ -36,13 +36,13 @@ class OrderItem(models.Model):
 
 
 class Tag(models.Model):
-    name = models.TextField()
-    pinyin = models.CharField(max_length=20)
+    name = models.CharField(max_length=40)
+    pinyin = models.CharField(max_length=40)
     used_count = models.IntegerField()
 
 
 class ClothName(models.Model):
-    name = models.TextField()
-    pinyin = models.CharField(max_length=20)
+    name = models.CharField(max_length=40)
+    pinyin = models.CharField(max_length=40)
     used_count = models.IntegerField()
     price = models.FloatField()

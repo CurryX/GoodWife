@@ -92,6 +92,15 @@ function editOkClicked() {
     item.unitPrice = parseFloat($('#edit-unit-price').val());
     item.tags = selectionToString(editTags.getSelection());
     item.comment = $('#edit-comment').val();
+    $.ajax({
+        url: '/update_frequency',
+        method: 'GET',
+        data: {
+            'name': item.name,
+            'price': item.unitPrice,
+            'tags': item.tags
+        }
+    });
     addItemClicked();
 }
 
