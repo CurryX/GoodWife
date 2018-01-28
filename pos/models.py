@@ -13,13 +13,14 @@ class Member(models.Model):
 
 
 class Order(models.Model):
-    member = models.ForeignKey(Member, related_name='orders')
+    member = models.ForeignKey(Member, related_name='orders', blank=True, null=True)
     created_time = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     total_price = models.FloatField()
     cash_paid = models.FloatField()
     card_paid = models.FloatField()
     discount = models.FloatField()
+    change = models.FloatField()
     completed = models.BooleanField()
     comment = models.TextField()
 
