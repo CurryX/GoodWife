@@ -2,6 +2,21 @@ var items = [];
 var selected = -1;
 var dummyItem = {name: '', count: 1, unitPrice: 0, tags: '', comment: ''};
 var editName, editTags;
+var totalPrice = 0.0;
+
+function tryParseInt(str) {
+    if(str !== null && str.length > 0 && !isNaN(str)) return parseInt(str);
+    return 0;
+}
+
+function tryParseFloat(str) {
+    if(str !== null && str.length > 0 && !isNaN(str)) return parseFloat(str);
+    return 0.0;
+}
+
+function money(x) {
+    return x.toFixed(2);
+}
 
 function selectionToString(data) {
     var str = '';
@@ -23,7 +38,7 @@ function stringToSelection(str) {
 function showItemList() {
     $('#items').empty();
     var totalCount = 0;
-    var totalPrice = 0;
+    totalPrice = 0.0;
     $(items).each(function (index, item) {
         totalCount += item.count;
         totalPrice += item.unitPrice * item.count;
@@ -153,10 +168,25 @@ function documentReady() {
     addItemClicked();
 }
 
+function refreshCheckout() {
+    var percent = tryParseFloat($('#checkout-discount-percent').val());
+    var adjusted = money(totalPrice * ((100.0 - percent) / 100.0));
+    var discount = tryParseFloat($('#checkout-discount').val());
+    var cash = tryParseFloat($('#checkout-cash').val());
+    var card = tryParseFloat($('#checkout-card').val());
+    var balance = money(adjusted - discount - cash - card);
+    $('#checkout-total').html('￥' + totalPrice);
+    $('#checkout-adjusted').html('￥' + adjusted);
+    $('#checkout-balance-label').html(balance > 0 ? '还差' : '找零');
+    $('#checkout-balance').html('￥' + balance);
+}
+
 $(document)
     .ready(documentReady)
     .on('click', '#add-item', addItemClicked)
     .on('click', '#edit-ok', editOkClicked)
     .on('click', '#edit-cancel', editCancelClicked)
     .on('click', '.card-item', cardItemClicked)
-    .on('click', '.card-remove', cardRemoveClicked);
+    .on('click', '.card-remove', cardRemoveClicked)
+    .on('change', '.checkout-number', refreshCheckout)
+    .on('show.bs.modal', '#checkout', refreshCheckout);

@@ -15,7 +15,7 @@
                     <div id="total-price" class="pull-right"></div>
                     <div class="clearfix"></div>
                 </div>
-                <button type="button" class="btn btn-success btn-block">结算</button>
+                <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#checkout">结算</button>
             </div>
             <div id="items"></div>
             <button id="add-item" class="btn btn-info btn-block">添加</button>
@@ -59,6 +59,90 @@
                     <div class="col-sm-4">
                         <button id="edit-cancel" class="btn btn-danger btn-block">取消</button>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="checkout" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h3 class="modal-title">结算</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid row">
+                        <div class="form-group row">
+                            <label for="member-id" class="col-xs-2 control-label">会员卡号</label>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" id="member-id">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="member-name" class="col-xs-2 control-label">顾客姓名</label>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" id="member-name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="member-phone" class="col-xs-2 control-label">电话</label>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" id="member-phone">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label class="col-xs-2 control-label">总计</label>
+                            <div class="col-xs-10">
+                                <p id="checkout-total"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout-discount-percent" class="col-xs-2 control-label">折扣</label>
+                            <div class="col-xs-10 input-group">
+                                <input type="number" class="form-control checkout-number" id="checkout-discount-percent" value="0" min="0" max="100">
+                                <div class="input-group-addon">%</div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label class="col-xs-2 control-label">应付</label>
+                            <div class="col-xs-10">
+                                <p id="checkout-adjusted"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout-discount" class="col-xs-2 control-label">优惠</label>
+                            <div class="col-xs-10 input-group">
+                                <div class="input-group-addon">￥</div>
+                                <input type="number" class="form-control checkout-number" id="checkout-discount" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout-cash" class="col-xs-2 control-label">现金</label>
+                            <div class="col-xs-10 input-group">
+                                <div class="input-group-addon">￥</div>
+                                <input type="number" class="form-control checkout-number" id="checkout-cash" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout-card" class="col-xs-2 control-label">会员卡</label>
+                            <div class="col-xs-10 input-group">
+                                <div class="input-group-addon">￥</div>
+                                <input type="number" class="form-control checkout-number" id="checkout-card" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-2 control-label" id="checkout-balance-label">还差</label>
+                            <div class="col-xs-10">
+                                <p id="checkout-balance"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="checkout-ok">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 </div>
             </div>
         </div>
