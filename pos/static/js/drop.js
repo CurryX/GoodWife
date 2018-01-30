@@ -178,7 +178,7 @@ function refreshCheckout() {
     $('#checkout-total').html('￥' + totalPrice);
     $('#checkout-adjusted').html('￥' + adjusted);
     $('#checkout-balance-label').html(balance > 0 ? '还差' : '找零');
-    $('#checkout-balance').html('￥' + balance);
+    $('#checkout-balance').html('￥' + (balance >= 0 ? balance : -balance));
 }
 
 $(document)
