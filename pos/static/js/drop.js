@@ -2,7 +2,6 @@ var items = [];
 var selected = -1;
 var dummyItem = {name: '', count: 1, unitPrice: 0, tags: '', comment: ''};
 var editName, editTags;
-var totalPrice = 0.0;
 
 function tryParseInt(str) {
     if(str !== null && str.length > 0 && !isNaN(str)) return parseInt(str);
@@ -38,7 +37,7 @@ function stringToSelection(str) {
 function showItemList() {
     $('#items').empty();
     var totalCount = 0;
-    totalPrice = 0.0;
+    var totalPrice = 0.0;
     $(items).each(function (index, item) {
         totalCount += item.count;
         totalPrice += item.unitPrice * item.count;
@@ -53,8 +52,8 @@ function showItemList() {
             '</div>';
         $('#items').append(html);
     });
-    $('#total-count').html(totalCount + '件');
-    $('#total-price').html('￥' + totalPrice);
+    $('#total-count').html(totalCount);
+    $('#total-price').html(totalPrice);
 }
 
 function showItemDetail() {
@@ -169,16 +168,17 @@ function documentReady() {
 }
 
 function refreshCheckout() {
+    var total = tryParseFloat($('#total-price').html());
     var percent = tryParseFloat($('#checkout-discount-percent').val());
-    var adjusted = money(totalPrice * ((100.0 - percent) / 100.0));
+    var adjusted = money(total * ((100.0 - percent) / 100.0));
     var discount = tryParseFloat($('#checkout-discount').val());
     var cash = tryParseFloat($('#checkout-cash').val());
     var card = tryParseFloat($('#checkout-card').val());
     var balance = money(adjusted - discount - cash - card);
-    $('#checkout-total').html('￥' + totalPrice);
-    $('#checkout-adjusted').html('￥' + adjusted);
+    $('#checkout-total').html(total);
+    $('#checkout-adjusted').html(adjusted);
     $('#checkout-balance-label').html(balance > 0 ? '还差' : '找零');
-    $('#checkout-balance').html('￥' + (balance >= 0 ? balance : -balance));
+    $('#checkout-balance').html(balance >= 0 ? balance : -balance);
 }
 
 $(document)

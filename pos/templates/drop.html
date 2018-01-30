@@ -49,12 +49,12 @@
                 <h4>收衣</h4>
                 <div>
                     <div class="pull-left">总计：</div>
-                    <div id="total-count" class="pull-right"></div>
+                    <div class="pull-right"><span id="total-count"></span>件</div>
                     <div class="clearfix"></div>
                 </div>
                 <div>
                     <div class="pull-left">总价：</div>
-                    <div id="total-price" class="pull-right"></div>
+                    <div class="pull-right">￥<span id="total-price"></span></div>
                     <div class="clearfix"></div>
                 </div>
                 <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#checkout">结算</button>
@@ -94,7 +94,7 @@
                         <div class="form-group">
                             <label class="col-xs-2 control-label">总计</label>
                             <div class="col-xs-10">
-                                <p id="checkout-total"></p>
+                                <p>￥<span id="checkout-total"></span></p>
                             </div>
                         </div>
                         <div class="form-group">
@@ -108,7 +108,7 @@
                         <div class="form-group">
                             <label class="col-xs-2 control-label">应付</label>
                             <div class="col-xs-10">
-                                <p id="checkout-adjusted"></p>
+                                <p>￥<span id="checkout-adjusted"></span></p>
                             </div>
                         </div>
                         <div class="form-group">
@@ -135,7 +135,7 @@
                         <div class="form-group">
                             <label class="col-xs-2 control-label" id="checkout-balance-label">还差</label>
                             <div class="col-xs-10">
-                                <p id="checkout-balance"></p>
+                                <p>￥<span id="checkout-balance"></span></p>
                             </div>
                         </div>
                     </div>
