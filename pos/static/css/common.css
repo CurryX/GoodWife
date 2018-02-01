@@ -33,3 +33,11 @@ body {
 .bootstrap-tagsinput {
     width: 100%;
 }
+.detail-item {
+    margin: 10px 0;
+    horiz-align: center;
+}
+.detail-body {
+    max-width: 320px;
+    margin: 0 auto;
+}

@@ -1,7 +1,7 @@
 import json
 
 from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from pos.models import Tag, ClothName, Order, OrderItem
 from pos.pinyin import PinYin
@@ -65,3 +65,9 @@ def add_order(request):
                              quantity=item['count'], comment=item['comment'], order=order)
         order_item.save()
     return JsonResponse({'id': order.pk})
+
+
+def order_detail(request, id):
+    order = get_object_or_404(Order, pk=id)
+    items = OrderItem.objects.filter(order=order)
+    return render(request, 'order.html', {'order': order, 'items': items, 'balance': abs(order.balance)})

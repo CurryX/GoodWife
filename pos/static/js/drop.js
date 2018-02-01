@@ -144,8 +144,11 @@ function checkoutOkClicked() {
         url: '/add_order',
         method: 'GET',
         data: {'order': JSON.stringify(order)},
-        complete: function () {
-            window.location.reload();
+        success: function (data) {
+            window.location.href = '/order/' + data.id;
+        },
+        error: function (a, b, c) {
+            alert(b + ' ' + c);
         }
     });
 }

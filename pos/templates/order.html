@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>订单详情</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/common.css' %}" rel="stylesheet">
+</head>
+<body class="detail-body">
+    <h3 style="text-align: center">好太太洗衣馆</h3>
+    <div style="text-align: center">电话：13800138000</div>
+    <hr>
+    {% for item in items %}
+        <div class="detail-item">
+            <div class="pull-left"><strong>{{ item.name }}</strong></div>
+            <div class="pull-right">{{ item.quantity }}&nbsp;&times;&nbsp;￥{{ item.unit_price }}</div>
+            <div class="clearfix"></div>
+            <div>{{ item.tags }}</div>
+            <div class="text-muted">{{ item.comment }}</div>
+        </div>
+    {% endfor %}
+    <hr>
+    {% if order.comment %}
+        <div>
+            <div>备注：{{ order.comment }}</div>
+        </div>
+    {% endif %}
+    <div>
+        <div class="pull-left">总计</div>
+        <div class="pull-right">￥{{ order.total_price }}</div>
+        <div class="clearfix"></div>
+    </div>
+    {% if order.discount_percent %}
+        <div>
+            <div class="pull-left">折扣</div>
+            <div class="pull-right">{{ order.discount_percent }}%</div>
+            <div class="clearfix"></div>
+        </div>
+    {% endif %}
+    {% if order.discount %}
+        <div>
+            <div class="pull-left">优惠</div>
+            <div class="pull-right">￥{{ order.discount }}</div>
+            <div class="clearfix"></div>
+        </div>
+    {% endif %}
+    {% if order.cash_paid %}
+        <div>
+            <div class="pull-left">现金</div>
+            <div class="pull-right">￥{{ order.cash_paid }}</div>
+            <div class="clearfix"></div>
+        </div>
+    {% endif %}
+    {% if order.card_paid %}
+        <div>
+            <div class="pull-left">会员卡</div>
+            <div class="pull-right">￥{{ order.card_paid }}</div>
+            <div class="clearfix"></div>
+        </div>
+    {% endif %}
+    <div>
+        <div class="pull-left">{% if order.balance > 0 %}还差{% else %}找零{% endif %}</div>
+        <div class="pull-right">￥{{ balance }}</div>
+        <div class="clearfix"></div>
+    </div>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>

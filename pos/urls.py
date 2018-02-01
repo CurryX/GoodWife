@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^get_cloth_names$', views.get_cloth_names),
     url(r'^update_frequency$', views.update_frequency),
     url(r'^add_order', views.add_order),
+    url(r'^order/(?P<id>\d+)', views.order_detail),
 ]
