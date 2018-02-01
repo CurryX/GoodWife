@@ -20,8 +20,9 @@ class Order(models.Model):
     cash_paid = models.FloatField()
     card_paid = models.FloatField()
     discount = models.FloatField()
-    change = models.FloatField()
-    completed = models.BooleanField()
+    discount_percent = models.FloatField()
+    balance = models.FloatField()
+    completed = models.BooleanField(default=False)
     comment = models.TextField()
 
 
@@ -29,8 +30,8 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items')
     name = models.TextField()
     tags = models.TextField()
-    washed = models.BooleanField()
-    picked = models.BooleanField()
+    washed = models.BooleanField(default=False)
+    picked = models.BooleanField(default=False)
     unit_price = models.FloatField()
     quantity = models.FloatField()
     comment = models.TextField()

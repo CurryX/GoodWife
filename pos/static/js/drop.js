@@ -122,6 +122,34 @@ function editCancelClicked() {
     addItemClicked();
 }
 
+function checkoutOkClicked() {
+    var total = tryParseFloat($('#total-price').html());
+    var percent = tryParseFloat($('#checkout-discount-percent').val());
+    var adjusted = money(total * ((100.0 - percent) / 100.0));
+    var discount = tryParseFloat($('#checkout-discount').val());
+    var cash = tryParseFloat($('#checkout-cash').val());
+    var card = tryParseFloat($('#checkout-card').val());
+    var balance = money(adjusted - discount - cash - card);
+    var order = {
+        'total': total,
+        'cash': cash,
+        'card': card,
+        'discount': discount,
+        'discountPercent': percent,
+        'balance': balance,
+        'comment': $('#checkout-comment').val(),
+        'items': items
+    };
+    $.get({
+        url: '/add_order',
+        method: 'GET',
+        data: {'order': JSON.stringify(order)},
+        complete: function () {
+            window.location.reload();
+        }
+    });
+}
+
 function initNameInput(value) {
     editName = $('#edit-name').magicSuggest({
         data: '/get_cloth_names',
@@ -188,5 +216,6 @@ $(document)
     .on('click', '#edit-cancel', editCancelClicked)
     .on('click', '.card-item', cardItemClicked)
     .on('click', '.card-remove', cardRemoveClicked)
+    .on('click', '#checkout-ok', checkoutOkClicked)
     .on('change', '.checkout-number', refreshCheckout)
     .on('show.bs.modal', '#checkout', refreshCheckout);

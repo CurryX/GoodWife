@@ -1,7 +1,9 @@
+import json
+
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 
-from pos.models import Tag, ClothName
+from pos.models import Tag, ClothName, Order, OrderItem
 from pos.pinyin import PinYin
 
 
@@ -51,3 +53,15 @@ def update_frequency(request):
                 obj.used_count += 1
                 obj.save()
     return HttpResponse()
+
+
+def add_order(request):
+    obj = json.loads(request.GET.get('order', ''))
+    order = Order(total_price=obj['total'], cash_paid=obj['cash'], card_paid=obj['card'], discount=obj['discount'],
+                  discount_percent=obj['discountPercent'], balance=obj['balance'], comment=obj['comment'])
+    order.save()
+    for item in obj['items']:
+        order_item = OrderItem(name=item['name'], tags=item['tags'], unit_price=item['unitPrice'],
+                             quantity=item['count'], comment=item['comment'], order=order)
+        order_item.save()
+    return JsonResponse({'id': order.pk})
