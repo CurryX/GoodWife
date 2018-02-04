@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 {% load static %}
+{% load tz %}
 <head>
     <meta charset="UTF-8">
     <title>订单详情</title>
@@ -8,8 +9,20 @@
     <link href="{% static 'css/common.css' %}" rel="stylesheet">
 </head>
 <body class="detail-body">
-    <h3 style="text-align: center">好太太洗衣馆</h3>
-    <div style="text-align: center">电话：13800138000</div>
+    <div style="text-align: center" class="no-print">
+        {% if order.completed %}
+            <button id="order-uncomplete" class="btn btn-success">已完成</button>
+        {% else %}
+            <button id="order-complete" class="btn btn-warning">未完成</button>
+        {% endif %}
+        <button id="order-delete" class="btn btn-danger">删除</button>
+        <button id="order-print" class="btn btn-info">打印</button>
+    </div>
+    <div style="text-align: center">
+        <h3>好太太洗衣馆</h3>
+        <div>电话：13800138000</div>
+        <div>下单时间：{{ order.created_time|localtime|date:'Y-m-d H:i:s' }}</div>
+    </div>
     <hr>
     {% for item in items %}
         <div class="detail-item">
@@ -64,7 +77,11 @@
         <div class="pull-right">￥{{ balance }}</div>
         <div class="clearfix"></div>
     </div>
+    <script>
+        var id = {{ order.pk }};
+    </script>
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/order.js' %}"></script>
 </body>
 </html>

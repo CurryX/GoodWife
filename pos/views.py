@@ -1,7 +1,8 @@
 import json
 
 from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 
 from pos.models import Tag, ClothName, Order, OrderItem
 from pos.pinyin import PinYin
@@ -71,3 +72,21 @@ def order_detail(request, id):
     order = get_object_or_404(Order, pk=id)
     items = OrderItem.objects.filter(order=order)
     return render(request, 'order.html', {'order': order, 'items': items, 'balance': abs(order.balance)})
+
+
+def order_modify(request):
+    order = get_object_or_404(Order, pk=request.GET.get('id', 0))
+    action = request.GET.get('action', '')
+    if action == 'complete':
+        order.completed = True
+        order.save()
+    elif action == 'uncomplete':
+        order.completed = False
+        order.save()
+    return HttpResponse()
+
+
+def order_delete(request, id):
+    order = get_object_or_404(Order, pk=id)
+    order.delete()
+    return redirect(reverse('home'))
