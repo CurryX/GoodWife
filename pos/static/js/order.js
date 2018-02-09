@@ -9,12 +9,28 @@ function modify(data) {
     });
 }
 
-function orderUncomplete() {
-    modify({'action': 'uncomplete'});
+function orderUnpickAll() {
+    modify({'action': 'unpick_all'});
 }
 
-function orderComplete() {
-    modify({'action': 'complete'});
+function orderPickAll() {
+    modify({'action': 'pick_all'});
+}
+
+function orderWashAll() {
+    modify({'action': 'wash_all'});
+}
+
+function unpickItem() {
+    modify({'action': 'unpick_item', 'item': $(this).parent().data('id')});
+}
+
+function pickItem() {
+    modify({'action': 'pick_item', 'item': $(this).parent().data('id')});
+}
+
+function washItem() {
+    modify({'action': 'wash_item', 'item': $(this).parent().data('id')});
 }
 
 function orderDelete() {
@@ -28,7 +44,11 @@ function orderPrint() {
 }
 
 $(document)
-    .on('click', '#order-uncomplete', orderUncomplete)
-    .on('click', '#order-complete', orderComplete)
+    .on('click', '#order-unpick-all', orderUnpickAll)
+    .on('click', '#order-pick-all', orderPickAll)
+    .on('click', '#order-wash-all', orderWashAll)
+    .on('click', '.unpick-item', unpickItem)
+    .on('click', '.pick-item', pickItem)
+    .on('click', '.wash-item', washItem)
     .on('click', '#order-delete', orderDelete)
     .on('click', '#order-print', orderPrint);

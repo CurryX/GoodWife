@@ -71,18 +71,44 @@ def add_order(request):
 def order_detail(request, id):
     order = get_object_or_404(Order, pk=id)
     items = OrderItem.objects.filter(order=order)
-    return render(request, 'order.html', {'order': order, 'items': items, 'balance': abs(order.balance)})
+    all_washed = all(item.washed for item in items)
+    all_picked = all(item.picked for item in items)
+    return render(request, 'order.html',
+                  {'order': order, 'items': items, 'balance': abs(order.balance), 'all_washed': all_washed,
+                   'all_picked': all_picked})
 
 
 def order_modify(request):
     order = get_object_or_404(Order, pk=request.GET.get('id', 0))
+    order_item = get_object_or_404(OrderItem, pk=request.GET.get('item', 0)) if 'item' in request.GET else None
     action = request.GET.get('action', '')
-    if action == 'complete':
-        order.completed = True
-        order.save()
-    elif action == 'uncomplete':
-        order.completed = False
-        order.save()
+    if action == 'unpick_all':
+        for item in order.items.all():
+            item.picked = False
+            item.washed = False
+            item.save()
+    elif action == 'pick_all':
+        for item in order.items.all():
+            item.picked = True
+            item.washed = True
+            item.save()
+    elif action == 'wash_all':
+        for item in order.items.all():
+            item.picked = False
+            item.washed = True
+            item.save()
+    elif action == 'unpick_item':
+        order_item.picked = False
+        order_item.washed = False
+        order_item.save()
+    elif action == 'pick_item':
+        order_item.picked = True
+        order_item.washed = True
+        order_item.save()
+    elif action == 'wash_item':
+        order_item.picked = False
+        order_item.washed = True
+        order_item.save()
     return HttpResponse()
 
 

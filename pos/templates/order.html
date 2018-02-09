@@ -10,13 +10,15 @@
 </head>
 <body class="detail-body">
     <div style="text-align: center" class="no-print">
-        {% if order.completed %}
-            <button id="order-uncomplete" class="btn btn-success">已完成</button>
+        {% if all_picked %}
+            <button id="order-unpick-all" class="btn btn-success">全部已取</button>
+        {% elif all_washed %}
+            <button id="order-pick-all" class="btn btn-info">标记全部为已取</button>
         {% else %}
-            <button id="order-complete" class="btn btn-warning">未完成</button>
+            <button id="order-wash-all" class="btn btn-warning">标记全部为已洗</button>
         {% endif %}
         <button id="order-delete" class="btn btn-danger">删除</button>
-        <button id="order-print" class="btn btn-info">打印</button>
+        <button id="order-print" class="btn btn-default">打印</button>
     </div>
     <div style="text-align: center">
         <h3>好太太洗衣馆</h3>
@@ -26,7 +28,18 @@
     <hr>
     {% for item in items %}
         <div class="detail-item">
-            <div class="pull-left"><strong>{{ item.name }}</strong></div>
+            <div class="pull-left">
+                <strong>{{ item.name }}</strong>
+                <span class="no-print" data-id="{{ item.pk }}">
+                    {% if item.picked %}
+                        <button class="btn btn-xs btn-success unpick-item">已取</button>
+                    {% elif item.washed %}
+                        <button class="btn btn-xs btn-info pick-item">已洗</button>
+                    {% else %}
+                        <button class="btn btn-xs btn-info wash-item">未洗</button>
+                    {% endif %}
+                </span>
+            </div>
             <div class="pull-right">{{ item.quantity }}&nbsp;&times;&nbsp;￥{{ item.unit_price }}</div>
             <div class="clearfix"></div>
             <div>{{ item.tags }}</div>
