@@ -22,7 +22,8 @@ class Order(models.Model):
     discount = models.FloatField()
     discount_percent = models.FloatField()
     balance = models.FloatField()
-    completed = models.BooleanField(default=False)
+    all_washed = models.BooleanField(default=False)
+    all_picked = models.BooleanField(default=False)
     comment = models.TextField()
 
 

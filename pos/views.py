@@ -111,6 +111,9 @@ def order_modify(request):
         order_item.picked = False
         order_item.washed = True
         order_item.save()
+    order.all_washed = all(item.washed for item in order.items.all())
+    order.all_picked = all(item.picked for item in order.items.all())
+    order.save()
     return HttpResponse()
 
 
