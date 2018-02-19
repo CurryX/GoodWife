@@ -21,14 +21,16 @@ def drop(request):
 
 
 def get_tags(request):
-    tags = Tag.objects.order_by('-used_count')
-    resp = [{'name': tag.pinyin, 'id': tag.name} for tag in tags]
+    query = request.GET.get('query', '')
+    tags = Tag.objects.filter(pinyin__istartswith=query).order_by('-used_count')
+    resp = [{'name': tag.pinyin, 'id': tag.name} for tag in tags[:15]]
     return JsonResponse(resp, safe=False)
 
 
 def get_cloth_names(request):
-    names = ClothName.objects.order_by('-used_count')
-    resp = [{'name': name.pinyin, 'id': name.name, 'price': name.price} for name in names]
+    query = request.GET.get('query', '')
+    names = ClothName.objects.filter(pinyin__istartswith=query).order_by('-used_count')
+    resp = [{'name': name.pinyin, 'id': name.name, 'price': name.price} for name in names[:15]]
     return JsonResponse(resp, safe=False)
 
 
