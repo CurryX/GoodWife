@@ -10,6 +10,7 @@
 </head>
 <body class="detail-body">
     <div style="text-align: center" class="no-print">
+        <button class="btn btn-info" onclick="window.history.back()"><< 返回</button>
         {% if all_picked %}
             <button id="order-unpick-all" class="btn btn-success">全部已取</button>
         {% elif all_washed %}
@@ -24,6 +25,7 @@
         <h3>好太太洗衣馆</h3>
         <div>电话：13800138000</div>
         <div>下单时间：{{ order.created_time|localtime|date:'Y-m-d H:i:s' }}</div>
+        <div>单号：{{ order.pk }}</div>
     </div>
     <hr>
     {% for item in items %}

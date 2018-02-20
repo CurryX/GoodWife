@@ -121,3 +121,8 @@ def order_delete(request, id):
     order = get_object_or_404(Order, pk=id)
     order.delete()
     return redirect(reverse('home'))
+
+
+def order_list(request):
+    orders = Order.objects.all().order_by('-created_time')
+    return render(request, 'order_list.html', {'orders': orders})

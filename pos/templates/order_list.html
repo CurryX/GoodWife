@@ -1,0 +1,32 @@
+{% load static %}
+{% load tz %}
+{% include 'base.html' %}
+{% block body %}
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>单号</th>
+                    <th>下单时间</th>
+                    <th>件数</th>
+                    <th>总计金额</th>
+                    <th class="list-detail">内容</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    <tr class="list-row" data-id="{{ order.pk }}">
+                        <th>{{ order.pk }}</th>
+                        <td>{{ order.created_time|localtime|date:'Y-m-d H:i:s' }}</td>
+                        <td>{{ order.items.count }}</td>
+                        <td>{{ order.total_price }}</td>
+                        <td>{{ order.summary }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/order-list.js' %}"></script>
+{% endblock %}

@@ -26,6 +26,10 @@ class Order(models.Model):
     all_picked = models.BooleanField(default=False)
     comment = models.TextField()
 
+    @property
+    def summary(self):
+        return '；'.join([item.name for item in self.items.all()])
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items')
