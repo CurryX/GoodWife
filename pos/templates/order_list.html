@@ -11,6 +11,7 @@
                     <th>件数</th>
                     <th>总计金额</th>
                     <th class="list-detail">内容</th>
+                    <th>状态</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,6 +22,15 @@
                         <td>{{ order.items.count }}</td>
                         <td>{{ order.total_price }}</td>
                         <td>{{ order.summary }}</td>
+                        <td>
+                            {% if order.all_picked %}
+                                <span class="label label-success">已取完</span>
+                            {% elif order.all_washed %}
+                                <span class="label label-info">已洗完</span>
+                            {% else %}
+                                <span class="label label-warning">未洗完</span>
+                            {% endif %}
+                        </td>
                     </tr>
                 {% empty %}
                     <tr>
