@@ -11,5 +11,5 @@ urlpatterns = [
     url(r'^order/(?P<id>\d+)$', views.order_detail),
     url(r'^order_modify$', views.order_modify),
     url(r'^order_delete/(?P<id>\d+)$', views.order_delete),
-    url(r'^order_list$', views.order_list),
+    url(r'^order_list$', views.order_list, name='order_list'),
 ]

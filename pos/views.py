@@ -13,7 +13,7 @@ pinyin.load_word()
 
 
 def home(request):
-    return render(request, 'home.html')
+    return redirect(reverse('order_list'))
 
 
 def drop(request):
@@ -124,5 +124,16 @@ def order_delete(request, id):
 
 
 def order_list(request):
-    orders = Order.objects.all().order_by('-created_time')
-    return render(request, 'order_list.html', {'orders': orders})
+    context = {}
+    orders = Order.objects.all()
+    if 'filter' in request.GET:
+        filter = request.GET['filter']
+        if filter == 'unwashed':
+            orders = orders.filter(all_washed=False)
+            context['active_wash'] = True
+        elif filter == 'unpicked':
+            orders = orders.filter(all_picked=False)
+            context['active_pickup'] = True
+    orders = orders.order_by('-created_time')
+    context['orders'] = orders
+    return render(request, 'order_list.html', context)
