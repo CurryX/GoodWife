@@ -1,0 +1,40 @@
+{% load static %}
+{% load tz %}
+{% include 'base.html' %}
+{% block body %}
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>姓名</th>
+                    <th>电话</th>
+                    <th>卡余额</th>
+                    <th>优惠</th>
+                    <th>备注</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for member in members %}
+                    <tr class="list-row" data-id="{{ member.pk }}">
+                        <th>{{ member.pk }}</th>
+                        <td>{{ member.name }}</td>
+                        <td>{{ member.phone }}</td>
+                        <td>{{ member.balance }}</td>
+                        <td>{{ member.discount }}</td>
+                        <td>{{ member.comment }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="6" style="text-align: center">
+                            目前没有会员
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/member-list.js' %}"></script>
+{% endblock %}

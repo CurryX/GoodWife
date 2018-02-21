@@ -27,7 +27,7 @@
                     <li{% if active_drop %} class="active"{% endif %}><a href="{% url 'drop' %}">收衣</a></li>
                     <li{% if active_wash %} class="active"{% endif %}><a href="{% url 'order_list' %}?filter=unwashed">上架</a></li>
                     <li{% if active_pickup %} class="active"{% endif %}><a href="{% url 'order_list' %}?filter=unpicked">取衣</a></li>
-                    <li{% if active_members %} class="active"{% endif %}><a href="#">会员管理</a></li>
+                    <li{% if active_members %} class="active"{% endif %}><a href="{% url 'member_list' %}">会员管理</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#">查找</a></li>

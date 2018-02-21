@@ -12,4 +12,7 @@ urlpatterns = [
     url(r'^order_modify$', views.order_modify),
     url(r'^order_delete/(?P<id>\d+)$', views.order_delete),
     url(r'^order_list$', views.order_list, name='order_list'),
+    url(r'^member_list$', views.member_list, name='member_list'),
+    url(r'^member/(?P<id>\d+)$', views.member, name='member_id'),
+    url(r'^member$', views.member, name='member'),
 ]

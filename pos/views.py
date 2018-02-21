@@ -4,7 +4,8 @@ from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
-from pos.models import Tag, ClothName, Order, OrderItem
+from pos.forms import MemberForm
+from pos.models import Tag, ClothName, Order, OrderItem, Member
 from pos.pinyin import PinYin
 
 
@@ -137,3 +138,14 @@ def order_list(request):
     orders = orders.order_by('-created_time')
     context['orders'] = orders
     return render(request, 'order_list.html', context)
+
+
+def member_list(request):
+    members = Member.objects.all()
+    return render(request, 'member_list.html', {'members': members})
+
+
+def member(request, id=''):
+    obj = get_object_or_404(Member, pk=id) if id else Member(discount=100, balance=0)
+    form = MemberForm(instance=obj)
+    return render(request, 'member.html', {'form': form})
